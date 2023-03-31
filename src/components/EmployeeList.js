@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import EmployeeService from '../services/EmployeeService'
 
 const EmployeeList = () => {
 
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(true)
+    const [employees, setEmployees] = useState(null)
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true)
+            try {
+              const response = await EmployeeService.getEmployees()
+              setEmployees(response.data)
+            } catch (error) {
+              console.log(error)
+            }
+            setLoading(false)
+        }
+        fetchData()
+    }, [])
+    
   return (
     <div className='container mx-au my-8'>
       <div className='h-12'>
@@ -23,19 +40,23 @@ const EmployeeList = () => {
                     <th className='text-right font-med px-6 py-3 text-gray-500 uppercase tracking-wider'>Actions</th>
                 </tr>
             </thead>
-            <tbody className='bg-white'>
+            {!loading && (
+             <tbody className="bg-white">
+              {employees.map(employee => (
                 <tr>
-                    <td className='px-6 py-4 whitespace-nowrap'> <div className='tex-sm text-gray-500'>Abun</div> </td>
-                    <td className='px-6 py-4 whitespace-nowrap'><div className='tex-sm text-gray-500'>Adag</div> </td>
-                    <td className='px-6 py-4 whitespace-nowrap'><div className='tex-sm text-gray-500'>abun@gmail.com</div> </td>
-                    <td className='px-6 py-4 whitespace-nowrap text-right text-sm'>
-                        <a href="#" className=' text-indigo-600 hover:text-indigo-800 px-4'>Edit</a> 
-                        <a href="#" className=' text-indigo-600 hover:text-indigo-800'>Delete</a> 
+                    <td className="px-6 py-4 whitespace-nowrap"> <div className="tex-sm text-gray-500">{employee.firstName}</div> </td>
+                    <td className="px-6 py-4 whitespace-nowrap"><div className="tex-sm text-gray-500">{employee.lastName}</div> </td>
+                    <td className="px-6 py-4 whitespace-nowrap"><div className="tex-sm text-gray-500">{employee.emailId}</div> </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                        <a href="#" className=" text-indigo-600 hover:text-indigo-800 px-4">Edit</a> 
+                        <a href="#" className=" text-indigo-600 hover:text-indigo-800">Delete</a> 
                     
                     </td>
                     
                 </tr>
+                ))}
             </tbody>
+            )}
         </table>
 
       </div>
