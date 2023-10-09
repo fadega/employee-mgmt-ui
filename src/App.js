@@ -5,7 +5,6 @@ import AddEmployee from './components/AddEmployee';
 import EmployeeList from './components/EmployeeList';
 import Navbar from './components/Navbar';
 import React from 'react';
-// import { ReactDOM } from 'react-don';
 
 function App() {
   return (
