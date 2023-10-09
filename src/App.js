@@ -17,15 +17,11 @@ function App() {
           <Route path='/' element={<EmployeeList />} />
           <Route path='/employeeList' element={EmployeeList} />
           <Route path='/addEmployee' element={<AddEmployee />} />
-        </Routes>
-       
-        
-        
+        </Routes>        
         {/* <EmployeeList /> 
         <AddEmployee />  */}
       </BrowserRouter>  
-    
-      
+  
     </>
   );
 }
